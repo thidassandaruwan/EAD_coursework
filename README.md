@@ -42,28 +42,28 @@
 * Green : 
 
 #### LoginPage
-![Login UI page](<Hotel UI and resources/UI Design/LoginUI.png>)
+![Login UI page](<img/UI_design/LoginUI.png>)
 
 #### AdminUI - Dashboard
-![AdminUI - Dashboard](<Hotel UI and resources/UI Design/AdminUI-Dashboard.png>)
+![AdminUI - Dashboard](<img/UI_design/AdminUI-Dashboard.png>)
 
 #### AdminUI - Employees
-![AdminUI-Employees](<Hotel UI and resources/UI Design/AdminUI-Employees.png>)
+![AdminUI-Employees](<img/UI_design/AdminUI-Employees.png>)
 
 #### AdminUI - Add/Modify Employees
-![AdminUI - Add/Modify Employees](<Hotel UI and resources/UI Design/AdminUI-AddModifyEmployee.png>)
+![AdminUI - Add/Modify Employees](<img/UI_design/AdminUI-AddModifyEmployee.png>)
 
 #### AdminUI - Rooms
-![AdminUI - Rooms](<Hotel UI and resources/UI Design/AdminUI-Rooms.png>)
+![AdminUI - Rooms](<img/UI_design/AdminUI-Rooms.png>)
 
 #### AdminUI - Add/Modify Rooms
-![AdminUI - Add/Modify Rooms](<Hotel UI and resources/UI Design/AdminUI-AddModifyRooms.png>)
+![AdminUI - Add/Modify Rooms](<img/UI_design/AdminUI-AddModifyRooms.png>)
 
 #### ReciptionistUI - Rooms
-![ReciptionistUI - Rooms](<Hotel UI and resources/UI Design/ReciptionistUI-Rooms.png>)
+![ReciptionistUI - Rooms](<img/UI_design/ReciptionistUI-Rooms.png>)
 
 #### ReciptionistUI - BookRooms
-![ReciptionistUI - BookRooms](<Hotel UI and resources/UI Design/ReciptionistUI-BookRoom.png>)
+![ReciptionistUI - BookRooms](<img/UI_design/ReciptionistUI-BookRoom.png>)
 
 #### ReciptionistUI - Customers
-![ReciptionistUI - Customers](<Hotel UI and resources/UI Design/ReciptionistUI-Customers.png>)
+![ReciptionistUI - Customers](<img/UI_design/ReciptionistUI-Customers.png>)
