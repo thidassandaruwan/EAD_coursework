@@ -1,0 +1,65 @@
+# ==========================================
+# Maven Build Outputs
+# ==========================================
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+pom.xml.bak
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+
+# ==========================================
+# Compiled Java Class Files
+# ==========================================
+*.class
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+hs_err_pid*
+replay_pid*
+
+# ==========================================
+# IDE Specific Files
+# ==========================================
+# IntelliJ IDEA
+.idea/
+*.iml
+*.ipr
+*.iws
+out/
+
+# ==========================================
+# Environment Variables & Secrets
+# ==========================================
+.env
+*.env
+application-secret.properties
+credentials.json
+secrets.yml
+
+# ==========================================
+# Logs
+# ==========================================
+*.log
+
+# ==========================================
+# Operating System Files
+# ==========================================
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# macOS (for cross-platform collaboration)
+.DS_Store
+.AppleDouble
+.LSOverride
