@@ -10,6 +10,9 @@ public class AdminUI extends JPanel {
     private final String adminName;
 
     // functionality related componenets
+    // mainpannel
+    private JPanel mainPanel;
+
     // Dashboard
     private JButton todayReportButton;
     private JLabel todayStRoomsLbl;
@@ -49,7 +52,8 @@ public class AdminUI extends JPanel {
         gbc.gridx = 1;
         gbc.gridy = 0;
         gbc.weightx = 0.8;
-        add(createDashboard(), gbc);
+        this.mainPanel = createMainPanel();
+        add(this.mainPanel, gbc);
 
 
     }
@@ -73,9 +77,14 @@ public class AdminUI extends JPanel {
         sidePannel.add(createSpace(0, 50));
 
         // create navigation buttons
-        sidePannel.add(createButton("Dashboard"));
-        sidePannel.add(createButton("Employees"));
-        sidePannel.add(createButton("Rooms"));
+        JButton dashboardButton = createButton("Dashboard");
+        JButton employeeButton = createButton("Employees");
+        JButton roomButton = createButton("Rooms");
+        JButton customerButton = createButton("Customers");
+        sidePannel.add(dashboardButton);
+        sidePannel.add(employeeButton);
+        sidePannel.add(roomButton);
+        sidePannel.add(customerButton);
         return sidePannel;
     }
 
@@ -83,7 +92,8 @@ public class AdminUI extends JPanel {
     private JPanel createMainPanel(){
         JPanel mainPanel = new JPanel();
         mainPanel.setBackground(baseFrame.COLOR_BEIGE);
-        mainPanel.add(createDashboard());
+        mainPanel.setLayout(new BorderLayout());
+        mainPanel.add(createDashboard(), BorderLayout.CENTER);
         return mainPanel;
     }
 
@@ -101,8 +111,20 @@ public class AdminUI extends JPanel {
 
     // create employeeTab
     private JPanel createEmployeeTab(){
-        return  new JPanel();
+        JPanel employeePanel = new JPanel();
+        employeePanel.setLayout(new BoxLayout(employeePanel, BoxLayout.Y_AXIS));
+
+        // add top row
+        JPanel topRow = new JPanel(new GridLayout(3, 1, 0, 0));
+        topRow.setBackground(baseFrame.COLOR_BLUE);
+
+
+
+        return  employeePanel;
     }
+
+    // create employeeTabHeader
+
 
     // create employeeTab
     private JPanel createRoomTab(){
@@ -113,7 +135,8 @@ public class AdminUI extends JPanel {
 
     // create infoCard
     private JPanel createTodayInfoCard(){
-        JPanel card = new JPanel(new GridLayout(4, 1, 0, 20));
+        JPanel card = new JPanel();
+        card.setLayout(new BoxLayout(card, BoxLayout.Y_AXIS));
         card.setBackground(baseFrame.COLOR_BLUE);
         card.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
@@ -122,6 +145,8 @@ public class AdminUI extends JPanel {
         topRow.setLayout(new GridLayout(1, 2, 10, 0));
         topRow.setBackground(baseFrame.COLOR_BEIGE);
         topRow.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        topRow.setMaximumSize(new Dimension(Integer.MAX_VALUE, 80));
+
         // add "TOday' label
         JLabel timeFrame = new JLabel("Today");
         timeFrame.setForeground(baseFrame.COLOR_BLUE);
@@ -134,24 +159,29 @@ public class AdminUI extends JPanel {
 
         card.add(topRow);
 
+        // seperate pannel for rest of the data in the card
+        JPanel contentArea = new JPanel(new GridLayout(3, 1, 0, 20));
+        contentArea.setOpaque(false);
         // add standard room
-        this.todayStRoomsLbl = createCardInfoLabel("300");
-        card.add(createInfoLabelRow(createCardInfoLabel("Standard Rooms"), this.todayStRoomsLbl));
+        this.todayStRoomsLbl = createWhiteLabel("300", baseFrame.COLOR_BEIGE, baseFrame.FONT_SERIF_PLAIN);
+        contentArea.add(createInfoLabelRow(createWhiteLabel("Standard Rooms", baseFrame.COLOR_BEIGE, baseFrame.FONT_SERIF_PLAIN), this.todayStRoomsLbl));
 
 
         // add premium room row
-        this.todayPrRoomsLbl = createCardInfoLabel("300");
-        card.add(createInfoLabelRow(createCardInfoLabel("Premium Rooms"), this.todayPrRoomsLbl));
+        this.todayPrRoomsLbl = createWhiteLabel("300", baseFrame.COLOR_BEIGE, baseFrame.FONT_SERIF_PLAIN);
+        contentArea.add(createInfoLabelRow(createWhiteLabel("Premium Rooms", baseFrame.COLOR_BEIGE, baseFrame.FONT_SERIF_PLAIN), this.todayPrRoomsLbl));
 
         // add total row
-        this.todayTotalLbl = createCardInfoLabel("30s00000");
-        card.add(createInfoLabelRow(createCardInfoLabel("Total"), this.todayTotalLbl));
+        this.todayTotalLbl = createWhiteLabel("30s00000", baseFrame.COLOR_BEIGE, baseFrame.FONT_SERIF_PLAIN);
+        contentArea.add(createInfoLabelRow(createWhiteLabel("Total", baseFrame.COLOR_BEIGE, baseFrame.FONT_SERIF_PLAIN), this.todayTotalLbl));
 
+        card.add(contentArea);
         return card;
     }
 
     private JPanel createMonthlyInfoCard(){
-        JPanel card = new JPanel(new GridLayout(4, 1, 0, 20));
+        JPanel card = new JPanel();
+        card.setLayout(new BoxLayout(card, BoxLayout.Y_AXIS));
         card.setBackground(baseFrame.COLOR_BLUE);
         card.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
@@ -160,6 +190,7 @@ public class AdminUI extends JPanel {
         topRow.setLayout(new GridLayout(1, 2, 10, 0));
         topRow.setBackground(baseFrame.COLOR_BEIGE);
         topRow.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        topRow.setMaximumSize(new Dimension(Integer.MAX_VALUE, 80));
         // add "TOday' label
         JLabel timeFrame = new JLabel("Monthly");
         timeFrame.setForeground(baseFrame.COLOR_BLUE);
@@ -172,28 +203,33 @@ public class AdminUI extends JPanel {
 
         card.add(topRow);
 
+        // seperate pannel for rest of the data in the card
+        JPanel contentArea = new JPanel(new GridLayout(3, 1, 0, 20));
+        contentArea.setOpaque(false);
         // add standard room
-        this.monthlyStRoomsLbl = createCardInfoLabel("300");
-        card.add(createInfoLabelRow(createCardInfoLabel("Standard Rooms"), this.monthlyStRoomsLbl));
+        this.monthlyStRoomsLbl = createWhiteLabel("300", baseFrame.COLOR_BEIGE, baseFrame.FONT_SERIF_PLAIN);
+        contentArea.add(createInfoLabelRow(createWhiteLabel("Standard Rooms", baseFrame.COLOR_BEIGE, baseFrame.FONT_SERIF_PLAIN), this.monthlyStRoomsLbl));
 
 
         // add premium room row
-        this.monthlyPrRoomsLbl = createCardInfoLabel("300");
-        card.add(createInfoLabelRow(createCardInfoLabel("Premium Rooms"), this.monthlyPrRoomsLbl));
+        this.monthlyPrRoomsLbl = createWhiteLabel("300", baseFrame.COLOR_BEIGE, baseFrame.FONT_SERIF_PLAIN);
+        contentArea.add(createInfoLabelRow(createWhiteLabel("Premium Rooms", baseFrame.COLOR_BEIGE, baseFrame.FONT_SERIF_PLAIN), this.monthlyPrRoomsLbl));
 
         // add total row
-        this.monthlyTotalLbl = createCardInfoLabel("30s00000");
-        card.add(createInfoLabelRow(createCardInfoLabel("Total"), this.monthlyTotalLbl));
+        this.monthlyTotalLbl = createWhiteLabel("30s00000", baseFrame.COLOR_BEIGE, baseFrame.FONT_SERIF_PLAIN);
+        contentArea.add(createInfoLabelRow(createWhiteLabel("Total", baseFrame.COLOR_BEIGE, baseFrame.FONT_SERIF_PLAIN), this.monthlyTotalLbl));
+
+        card.add(contentArea);
 
         return card;
     }
 
     // create cardInfoLabel
-    private JLabel createCardInfoLabel(String text){
+    private JLabel createWhiteLabel(String text, Color textColor, Font font){
         JLabel label = new JLabel(text);
-        label.setFont(baseFrame.FONT_SERIF_PLAIN);
-        label.setForeground(baseFrame.COLOR_BEIGE);
-        label.setAlignmentX(Component.LEFT_ALIGNMENT);
+        label.setFont(font);
+        label.setForeground(textColor);
+        label.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         return label;
     }
@@ -210,7 +246,7 @@ public class AdminUI extends JPanel {
 
     // create employeeInfoBar
 
-    // create roomInforBar
+    // create roomInfoBar
 
     // create white space
     private Component createSpace(int width, int height){
@@ -244,4 +280,7 @@ public class AdminUI extends JPanel {
         });
         return button;
     }
+
+    // TODO getters for components
+    // TODO getters for values
 }

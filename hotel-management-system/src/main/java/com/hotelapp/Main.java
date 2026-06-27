@@ -16,7 +16,7 @@ public class Main {
                 // creating the jframe on which the applicatoin will run on
                 BaseFrame baseFrame = new BaseFrame();
 
-                // show login page by default
+//                // show login page by default
 //                LoginUI loginUI = new LoginUI(baseFrame);
 //                // instantiate a authmodel object
 //                AuthModel authModel = new AuthModel();
@@ -24,7 +24,7 @@ public class Main {
 //                new LoginController(baseFrame, loginUI, authModel);
 //
 //                baseFrame.setView(loginUI, "Login");
-
+//
                 baseFrame.setView(new AdminUI(baseFrame, "Thidas"), "AdminUI");
                 baseFrame.setVisible(true);
 
