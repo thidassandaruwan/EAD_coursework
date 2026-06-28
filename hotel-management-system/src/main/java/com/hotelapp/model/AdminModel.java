@@ -65,6 +65,49 @@ public class AdminModel {
         return employeeList;
     }
 
+    // Insert a new employee into the database
+    public boolean addEmployee(Employee newEmployee) {
+        String sql = "INSERT INTO Employee (username, password, role) VALUES (?, ?, ?)";
+
+        try (Connection conn = DatabaseHelper.connect();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, newEmployee.username());
+            pstmt.setString(2, newEmployee.password());
+            pstmt.setString(3, newEmployee.role());
+
+            int rowsAffected = pstmt.executeUpdate();
+            // Returns true if the insert was successful
+            return (rowsAffected > 0);
+
+        } catch (SQLException e) {
+            System.err.println("Error adding employee: " + e.getMessage());
+            return false;
+        }
+    }
+
+    // Insert a new employee into the database
+    public boolean addRoom(Room newRoom) {
+        String sql = "INSERT INTO Room (space, tier, status, price) VALUES (?, ?, ?, ?)";
+
+        try (Connection conn = DatabaseHelper.connect();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, newRoom.space());
+            pstmt.setString(2, newRoom.tier());
+            pstmt.setString(3, "Ready");
+            pstmt.setDouble(4, newRoom.price());
+
+            int rowsAffected = pstmt.executeUpdate();
+            // Returns true if the insert was successful
+            return (rowsAffected > 0);
+
+        } catch (SQLException e) {
+            System.err.println("Error adding room: " + e.getMessage());
+            return false;
+        }
+    }
+
     public List<Room> getAllRooms(){
         List<Room> rooms = new ArrayList<>();
         // get all rooms query

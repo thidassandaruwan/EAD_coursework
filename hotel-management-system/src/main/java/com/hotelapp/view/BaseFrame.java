@@ -1,20 +1,11 @@
 package com.hotelapp.view;
 
+import com.hotelapp.util.Theme;
+
 import java.awt.*;
 import javax.swing.*;
 
 public class BaseFrame extends JFrame{
-    // custom colors for this project
-    public final Color COLOR_BEIGE = new Color(0xf6f4f0); // #f6f4f0
-    public final Color COLOR_BLUE = new Color(0x5068aa); // #5068aa
-    public final Color COLOR_GREY = new Color(0xc4cadb); // #c4cadb
-    public final Color COLOR_RED = new Color(0xcc0000); // #cc0000
-    public final Color COLOR_GREEN = new Color(0x79c139); // #
-
-    // font for the project
-    public final Font FONT_SERIF_BOLD = new Font("SansSerif", Font.BOLD, 20);
-    public final Font FONT_SERIF_PLAIN = new Font("SansSerif", Font.PLAIN, 20);
-    
     // Jpannel to hold everything visible
     private final JPanel mainContainer;
 
@@ -41,7 +32,7 @@ public class BaseFrame extends JFrame{
         // Jpannel to hold everything visible
         mainContainer = new JPanel();
         mainContainer.setLayout(new BorderLayout());
-        mainContainer.setBackground(COLOR_BEIGE);
+        mainContainer.setBackground(Theme.COLOR_BEIGE);
         // add the mainContainer to the Baseframe
         add(mainContainer);
     }
