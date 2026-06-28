@@ -1,4 +1,3 @@
-# EAD_coursework
 # Hotel Management System
 
 ## TO DO List
