@@ -39,6 +39,7 @@ public class ReceptionController {
         // Customer button actionlistner
         view.getBookRoomButton().addActionListener(e -> {
             view.updateMainPanel(view.createBookRoomTab());
+            setupBookRoomSearchAndFilter();
         });
 
         // Customer button actionlistner
@@ -131,6 +132,61 @@ public class ReceptionController {
                 JOptionPane.showMessageDialog(null, "Error updating room.");
             }
         });
+    }
+
+    // book room tab
+    // setup filter rooms according to date
+    private void setupBookRoomSearchAndFilter() {
+        view.getBookFilterButton().addActionListener(e -> {
+            // retreve the dates from dateFields
+            java.time.LocalDate checkInDate = view.getBookCheckInDate().getDate();
+            java.time.LocalDate checkOutDate = view.getBookCheckOutDate().getDate();
+
+            // date validation
+            if (checkInDate == null || checkOutDate == null) {
+                JOptionPane.showMessageDialog(null, "Please select both Check-In and Check-Out dates.", "Missing Dates", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            // validate date ranges
+            if (!checkOutDate.isAfter(checkInDate)) {
+                JOptionPane.showMessageDialog(null, "Check-Out date must be after Check-In date.", "Invalid Dates", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // Convert LocalDates to String for SQL
+            String checkInStr = checkInDate.toString();
+            String checkOutStr = checkOutDate.toString();
+
+            // Get filter values
+            String tier = (String) view.getBookTierFilter().getSelectedItem();
+            String space = (String) view.getBookSpaceFilter().getSelectedItem();
+
+            // get available rooms
+            List<Room> availableRooms = model.getAvailableRooms(checkInStr, checkOutStr, tier, space);
+
+            // update the UI
+            view.addAvailableRooms(availableRooms, checkInStr, checkOutStr);
+
+            // setup actionlisteners for Book buttons
+            setupBookRoomActionListeners();
+        });
+    }
+
+    // serpearte method to setup book rooom buttons since the room rows are only generated after Filter button is clicked
+    private void setupBookRoomActionListeners() {
+        if (view.getBookRoomBtns() != null) {
+            for (JButton bookBtn : view.getBookRoomBtns()) {
+                bookBtn.addActionListener(e -> {
+                    JButton clickedButton = (JButton) e.getSource();
+
+                    // Retrieve the BookingFormInfo object attached to the button in ReceptionUI
+                    BookingFormInfo bookingInfo = (BookingFormInfo) clickedButton.getClientProperty("bookingFormInfo");
+
+                    view.updateMainPanel(view.createBookingForm(bookingInfo));
+                });
+            }
+        }
     }
 
     // customer search controller

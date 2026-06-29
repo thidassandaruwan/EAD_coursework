@@ -1,9 +1,10 @@
 package com.hotelapp.model;
 
 public record BookingFormInfo(
-        int roomid,
+        int roomId,
         String roomTier,
         String roomSpace,
+        double roomPrice,
         String checkInDate,
         String checkOutDate
 ){}

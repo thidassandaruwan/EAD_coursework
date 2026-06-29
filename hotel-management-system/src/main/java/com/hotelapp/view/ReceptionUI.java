@@ -47,6 +47,16 @@ public class ReceptionUI extends JPanel{
     // book room
     private List<JButton> bookRoomBtns;
     private JPanel availableRoomPanel;
+    // room booking page
+    private JTextField bookingPageCustNameField;
+    private JTextField bookingPageRoomIDField;
+    private JTextField bookingPageRoomTierField;
+    private JTextField bookingPageRoomSpaceField;
+    private JTextField bookingPageCheckInField;
+    private JTextField bookingPageCheckOutField;
+    private JTextField bookingPagePriceField;
+    private JButton bookingPageBookButton;
+    private JButton backToBookRoom;
 
     // customerRecord tab related
     // customerRecord search funcitonality realted
@@ -380,7 +390,7 @@ public class ReceptionUI extends JPanel{
 
         JButton bookRoomBtn = UIFactory.createButton("Book", Theme.COLOR_BEIGE, Theme.COLOR_BLUE);
         // create a bookingForm info object and put it inside the button
-        BookingFormInfo bookingFormInfo = new BookingFormInfo(room.roomId(), room.tier(), room.space(), checkInDate, checkOutDate);
+        BookingFormInfo bookingFormInfo = new BookingFormInfo(room.roomId(), room.tier(), room.space(), room.price(), checkInDate, checkOutDate);
         bookRoomBtn.putClientProperty("bookingFormInfo", bookingFormInfo);
         // add the editroom btn to the editroom button list
         this.bookRoomBtns.add(bookRoomBtn);
@@ -388,6 +398,98 @@ public class ReceptionUI extends JPanel{
         row.add(bookRoomBtn);
 
         return row;
+    }
+
+    public JPanel createBookingForm(BookingFormInfo bookingFormInfo){
+        // layouts
+        JPanel bookingPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+
+        bookingPanel.setBackground(Theme.COLOR_BEIGE);
+        bookingPanel.setBorder(UIFactory.createPadding(20));
+
+        JPanel formPanel = new JPanel(new GridLayout(0, 2, 10, 30));
+        formPanel.setBackground(Theme.COLOR_BEIGE);
+
+        bookingPageCustNameField = new JTextField(20);
+        UIFactory.styleTextField(bookingPageCustNameField);
+        formPanel.add(createBookInputElement("Customer Name", bookingPageCustNameField));
+
+        bookingPageRoomIDField = new JTextField(20);
+        UIFactory.styleTextField(bookingPageRoomIDField);
+        bookingPageRoomIDField.setText(String.valueOf(bookingFormInfo.roomId()));
+        bookingPageRoomIDField.setEditable(false);
+        formPanel.add(createBookInputElement("Room ID", bookingPageRoomIDField));
+
+        bookingPageRoomTierField = new JTextField(20);
+        UIFactory.styleTextField(bookingPageRoomTierField);
+        bookingPageRoomTierField.setText(bookingFormInfo.roomTier());
+        bookingPageRoomTierField.setEditable(false);
+        formPanel.add(createBookInputElement("Room Ter", bookingPageRoomTierField));
+
+        bookingPageRoomSpaceField = new JTextField(20);
+        UIFactory.styleTextField(bookingPageRoomSpaceField);
+        bookingPageRoomSpaceField.setText(bookingFormInfo.roomSpace());
+        bookingPageRoomSpaceField.setEditable(false);
+        formPanel.add(createBookInputElement("Room Space", bookingPageRoomSpaceField));
+
+        bookingPageCheckInField = new JTextField(20);
+        UIFactory.styleTextField(bookingPageCheckInField);
+        bookingPageCheckInField.setText(bookingFormInfo.checkInDate());
+        bookingPageCheckInField.setEditable(false);
+        formPanel.add(createBookInputElement("Check In Date", bookingPageCheckInField));
+
+        bookingPageCheckOutField = new JTextField(20);
+        UIFactory.styleTextField(bookingPageCheckOutField);
+        bookingPageCheckOutField.setText(bookingFormInfo.checkOutDate());
+        bookingPageCheckOutField.setEditable(false);
+        formPanel.add(createBookInputElement("Check Out Date", bookingPageCheckOutField));
+
+        bookingPagePriceField = new JTextField(20);
+        UIFactory.styleTextField(bookingPagePriceField);
+        // TODO set price
+        bookingPagePriceField.setText(String.format("LKR%.2f"));
+        bookingPagePriceField.setEditable(false);
+        formPanel.add(createBookInputElement("Total", bookingPagePriceField));
+
+
+        JPanel buttonPanel = new JPanel(new GridLayout(3, 1, 0, 20));
+        buttonPanel.setBackground(Theme.COLOR_BEIGE);
+        bookingPageBookButton = UIFactory.createButton("Book Room", Theme.COLOR_BEIGE, Theme.COLOR_GREEN);
+        backToBookRoom = UIFactory.createButton("Go Back", Theme.COLOR_RED, Theme.COLOR_BEIGE);
+        buttonPanel.add(UIFactory.createSpace(0, 20)); // create white space
+        buttonPanel.add(bookingPageBookButton);
+        buttonPanel.add(backToBookRoom);
+
+
+        // set vertical space to 80%
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.weightx = 1.0;
+        gbc.weighty = 0.75;
+        gbc.fill = GridBagConstraints.BOTH;
+        // add the FormaPanel
+        bookingPanel.add(formPanel, gbc);
+
+        // set vertical space to 20%
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.weightx = 1.0;
+        gbc.weighty = 0.2;
+        gbc.fill = GridBagConstraints.BOTH;
+        // add buttonPannel
+        bookingPanel.add(buttonPanel, gbc);
+        return bookingPanel;
+    }
+
+    // create bookForm input panel with label
+    private JPanel createBookInputElement(String lblText, JTextField textField){
+        JPanel elementPanel = new JPanel(new GridLayout(2, 1, 0, 5));
+        elementPanel.setBackground(Theme.COLOR_BEIGE);
+        elementPanel.add(UIFactory.createLabel(lblText, Color.BLACK, Theme.FONT_SERIF_PLAIN));
+        elementPanel.add(textField);
+
+        return elementPanel;
     }
 
     // create customerTab
@@ -499,8 +601,18 @@ public class ReceptionUI extends JPanel{
     public JComboBox<String> getBookTierFilter(){ return this.bookTierFilter; }
     public JComboBox<String> getBookSpaceFilter(){ return this.bookSpaceFilter; }
     public JButton getBookFilterButton(){ return this.bookFilterButton; }
-    // bookroom
+    // search booking roompage
     public List<JButton> getBookRoomBtns(){ return this.bookRoomBtns; }
+    // booking room
+    public JTextField getBookingPageCustNameField(){ return this.bookingPageCustNameField; }
+    public JTextField getBookingPageRoomIDField(){ return this.bookingPageRoomIDField; }
+    public JTextField getBookingPageRoomTierField(){ return this.bookingPageRoomTierField; }
+    public JTextField getBookingPageRoomSpaceField(){ return this.bookingPageRoomSpaceField; }
+    public JTextField getBookingPageCheckInField(){ return this.bookingPageCheckInField; }
+    public JTextField getBookingPageCheckOutField(){ return this.bookingPageCheckOutField; }
+    public JTextField getBookingPagePriceField(){ return this.bookingPagePriceField; }
+    public JButton getBookingPageBookButton(){ return this.bookingPageBookButton; }
+    public JButton getBackToBookRoomButton(){return this.bookRoomButton; }
 
     // customerRecord tab related
     // customerRecord search funcitonality realted

@@ -63,6 +63,58 @@ public class ReceptionModel {
         return roomList;
     }
 
+    // return list of rooms filtered by their availability within the checkin and checkOUt dates. also considers the room tier and space
+    public List<Room> getAvailableRooms(String checkIn, String checkOut, String tier, String space) {
+        List<Room> availableRooms = new ArrayList<>();
+
+        // query get roomIds which are booked within the given dates and then get all rooms that are not those IDs
+        StringBuilder sql = new StringBuilder(
+                "SELECT r.* FROM Room r " +
+                        "WHERE r.roomId NOT IN (" +
+                        "    SELECT c.roomId FROM CustomerRecord c " +
+                        "    WHERE c.checkIn < ? AND c.checkOut > ?" +
+                        ")"
+        );
+
+        // Add optional tier and space filters
+        if (!"Any".equals(tier)) sql.append(" AND r.tier = ?");
+        if (!"Any".equals(space)) sql.append(" AND r.space = ?");
+
+        try (Connection conn = DatabaseHelper.connect();
+             PreparedStatement pstmt = conn.prepareStatement(sql.toString())) {
+
+            // Set date parameters for inner SQL query
+            pstmt.setString(1, checkOut);
+            pstmt.setString(2, checkIn);
+
+            // next query injection index
+            int paramIndex = 3;
+            // if tier isn't any
+            if (!"Any".equals(tier)) pstmt.setString(paramIndex++, tier);
+            // if space isn't any
+            if (!"Any".equals(space)) pstmt.setString(paramIndex, space);
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    // create a room object with result and add each room to available room list
+                    availableRooms.add(new Room(
+                            rs.getInt("roomId"),
+                            rs.getString("space"),
+                            rs.getString("tier"),
+                            rs.getString("status"),
+                            rs.getDouble("price")
+                    ));
+                }
+            }
+        }
+        catch (SQLException e)
+        {
+            System.err.println("Error fetching available rooms: " + e.getMessage());
+        }
+
+        return availableRooms;
+    }
+
     // update room
     public boolean updateRoom(int id, String status) {
         String sql = "UPDATE Room SET status = ? WHERE roomId = ?";
