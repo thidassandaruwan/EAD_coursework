@@ -182,11 +182,50 @@ public class ReceptionController {
 
                     // Retrieve the BookingFormInfo object attached to the button in ReceptionUI
                     BookingFormInfo bookingInfo = (BookingFormInfo) clickedButton.getClientProperty("bookingFormInfo");
-
+                    // switch to booking form
                     view.updateMainPanel(view.createBookingForm(bookingInfo));
+                    // setup functionality
+                    setupBookingFormListeners();
                 });
             }
         }
+    }
+
+    private void setupBookingFormListeners() {
+        // go back button action listener
+        view.getBackToBookRoomButton().addActionListener(e -> {
+            view.updateMainPanel(view.createBookRoomTab());
+            setupBookRoomSearchAndFilter();
+        });
+
+        // book room button functionality
+        view.getBookingPageBookButton().addActionListener(e -> {
+            String custName = view.getBookingPageCustNameField().getText().trim();
+            int roomId = Integer.parseInt(view.getBookingPageRoomIDField().getText());
+            String checkIn = view.getBookingPageCheckInField().getText();
+            String checkOut = view.getBookingPageCheckOutField().getText();
+
+            // Extract numeric price from the formatted label string (e.g., "LKR 5000.00" -> "5000.00")
+            String priceStr = view.getBookingPagePriceField().getText().replace("LKR ", "").trim();
+            double price = Double.parseDouble(priceStr);
+
+            // customer name validation
+            if (custName.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Please enter a customer name.", "Missing Information", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            // Execute the insert query
+            if (model.bookRoom(custName, roomId, checkIn, checkOut, price)) {
+                JOptionPane.showMessageDialog(null, "Reservation confirmed for " + custName + "!");
+
+                // Return to a fresh booking tab view
+                view.updateMainPanel(view.createBookRoomTab());
+                setupBookRoomSearchAndFilter();
+            } else {
+                JOptionPane.showMessageDialog(null, "Error saving reservation to database.", "Database Error", JOptionPane.ERROR_MESSAGE);
+            }
+        });
     }
 
     // customer search controller

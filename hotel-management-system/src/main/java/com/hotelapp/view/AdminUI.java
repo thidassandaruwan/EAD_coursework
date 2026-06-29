@@ -764,7 +764,7 @@ public class AdminUI extends JPanel {
         searchPanel.add(customerSearchButton);
 
         // add top row
-        customerPanel.add(UIFactory.createsHeaderRow(new String[]{"Custmer ID", "Customer Name", "Room ID", "Check-in Date", "Check-out Date", "Bill"}));
+        customerPanel.add(UIFactory.createsHeaderRow(new String[]{"Custmer Record ID", "Customer Name", "Room ID", "Check-in Date", "Check-out Date", "Bill"}));
         customerPanel.add(searchPanel);
 
         JPanel contentPanel = new JPanel();

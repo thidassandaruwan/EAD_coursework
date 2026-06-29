@@ -357,7 +357,7 @@ public class ReceptionUI extends JPanel{
         JPanel roomHeaderPanel = new JPanel();
         roomHeaderPanel.setLayout(new BoxLayout(roomHeaderPanel, BoxLayout.Y_AXIS));
         roomHeaderPanel.setBorder(BorderFactory.createEmptyBorder(30, 30, 0, 30));
-        roomHeaderPanel.add(UIFactory.createsHeaderRow(new String[]{"Room ID", "Size", "Tier", "Status", "Current Status"}));
+        roomHeaderPanel.add(UIFactory.createsHeaderRow(new String[]{"Room ID", "Size", "Tier", "Book Room"}));
         this.availableRoomPanel.add(roomHeaderPanel);
 
         JPanel contentPanel = new JPanel();
@@ -388,7 +388,6 @@ public class ReceptionUI extends JPanel{
         row.add(UIFactory.createLabel(String.valueOf(room.roomId()), Theme.COLOR_BLUE, Theme.FONT_SERIF_PLAIN));
         row.add(UIFactory.createLabel(room.space(), Theme.COLOR_BLUE, Theme.FONT_SERIF_PLAIN));
         row.add(UIFactory.createLabel(room.tier(), Theme.COLOR_BLUE, Theme.FONT_SERIF_PLAIN));
-        row.add(UIFactory.createLabel(room.status(), Theme.COLOR_BLUE, Theme.FONT_SERIF_PLAIN));
 
         JButton bookRoomBtn = UIFactory.createButton("Book", Theme.COLOR_BEIGE, Theme.COLOR_BLUE);
         // create a bookingForm info object and put it inside the button
@@ -539,7 +538,7 @@ public class ReceptionUI extends JPanel{
         customerSearchButton.setFont(Theme.FONT_SERIF_BOLD_SMALL);
         searchPanel.add(customerSearchButton);
 
-        customerPanel.add(UIFactory.createsHeaderRow(new String[]{"Custmer ID", "Customer Name", "Room ID", "Check-in Date", "Check-out Date", "Bill"}));
+        customerPanel.add(UIFactory.createsHeaderRow(new String[]{"Custmer Record ID", "Customer Name", "Room ID", "Check-in Date", "Check-out Date", "Bill"}));
         customerPanel.add(searchPanel);
 
         JPanel contentPanel = new JPanel();
@@ -627,7 +626,7 @@ public class ReceptionUI extends JPanel{
     public JTextField getBookingPageCheckOutField(){ return this.bookingPageCheckOutField; }
     public JTextField getBookingPagePriceField(){ return this.bookingPagePriceField; }
     public JButton getBookingPageBookButton(){ return this.bookingPageBookButton; }
-    public JButton getBackToBookRoomButton(){return this.bookRoomButton; }
+    public JButton getBackToBookRoomButton(){return this.backToBookRoom; }
 
     // customerRecord tab related
     // customerRecord search funcitonality realted

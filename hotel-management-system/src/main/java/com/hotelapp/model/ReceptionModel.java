@@ -131,6 +131,30 @@ public class ReceptionModel {
         }
     }
 
+    //book a room
+    public boolean bookRoom(String customerName, int roomId, String checkIn, String checkOut, double price) {
+        String insertCustomer = "INSERT INTO CustomerRecord (customerName, roomId, checkIn, checkOut, price) VALUES (?, ?, ?, ?, ?)";
+
+        try (Connection conn = DatabaseHelper.connect();
+             PreparedStatement pstmtCust = conn.prepareStatement(insertCustomer)) {
+
+            pstmtCust.setString(1, customerName);
+            pstmtCust.setInt(2, roomId);
+            pstmtCust.setString(3, checkIn);
+            pstmtCust.setString(4, checkOut);
+            pstmtCust.setDouble(5, price);
+
+            int rowsAffected = pstmtCust.executeUpdate();
+            return rowsAffected > 0;
+
+        }
+        catch (SQLException e)
+        {
+            System.err.println("Database error during booking: " + e.getMessage());
+            return false;
+        }
+    }
+
     // get all cusotemr records
     public List<CustomerRecord> getAllCustomerRecords() {
         List<CustomerRecord> customerRecords = new ArrayList<>();
